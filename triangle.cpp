@@ -1,3 +1,8 @@
+/** \file triangle.cpp
+	\brief Implementation of the general class Triangle
+	\author Elisa Angelinelli
+*/
+
 #include "triangle.h"
 
 /// @brief default constructor 

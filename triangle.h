@@ -8,7 +8,7 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -20,7 +20,6 @@ protected:
 	float sides[3];
 	
 	void SetSides(float s1, float s2, float s3);
-
 
 public:
 
@@ -49,6 +48,7 @@ public:
 	/// @{
 	float GetPerimeter();
 	void GetSides(float &s0, float &s1, float &s2);
+	virtual float GetArea();
 	/// @}
 	
 	/// @name DEBUG and SERIALIZATION 
