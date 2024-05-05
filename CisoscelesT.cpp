@@ -1,36 +1,43 @@
-/*! \file scaleneT.cpp
-	\brief Implementation of the functions of the class Scalene Triangle
+/*! \file CisoscelesT.cpp
+	\brief Implementation of the functions of the class Isosceles Triangle
 
 	Details.
 */
 
 #include <iostream>
-#include <math.h>
-#include "scaleneT.h"
+#include "CisoscelesT.h"
 
 /// @brief default constructor 
-ScaleneT::ScaleneT() {
+IsoscelesT::IsoscelesT() {
 
-	cout << "ScaleneT - constructor - default" << endl;
-
+	cout << "IsoscelesT - constructor - default" << endl;
+    
 	Init();
 
 }
 
 /// @brief constructor 
-/// @param s1 first side of the ScaleneT
-/// @param s2 second side of the ScaleneT
-/// @param s3 third side of the ScaleneT
-ScaleneT::ScaleneT(float s1, float s2, float s3) {
+/// @param s1 first side of the IsoscelesT
+/// @param s2 second side of the IsoscelesT
+/// @param s3 third side of the IsoscelesT
+IsoscelesT::IsoscelesT(float s1, float s2, float s3) {
 
 	Init();
 
-	cout << "ScaleneT - constructor" << endl;
+	cout << "IsoscelesT - constructor" << endl;
 
 	if (s1 <= 0. || s2 <= 0. || s3 <= 0.) {
 		WarningMessage("constructor: the sides of the triangle should be > 0"); 
 		SetDim(0, 0, 0);
 	}
+	else if (s1 > (s2+s3) || s2 > (s1+s3) || s3 > (s1+s2)){
+		WarningMessage("constructor: this is not a valid triangle");
+		SetDim(0, 0, 0);
+	}
+	else if(NotAValidIsosceles(s1, s2, s3) == false){
+        WarningMessage("constructor: not valid measures for an isosceles triangle");
+        SetDim(0, 0, 0);
+    }
 	else
 		SetDim(s1, s2, s3);
 
@@ -38,18 +45,18 @@ ScaleneT::ScaleneT(float s1, float s2, float s3) {
 
 /// @brief copy constructor 
 /// @param t reference to the object that should be copied 
-ScaleneT::ScaleneT(const ScaleneT &t) { 
+IsoscelesT::IsoscelesT(const IsoscelesT &t) { 
 
-	cout << "ScaleneT - copy constructor" << endl;
+	cout << "IsoscelesT - copy constructor" << endl;
 
 	Init(t);
 	
 }
 
 /// @brief destructor 
-ScaleneT::~ScaleneT() {
+IsoscelesT::~IsoscelesT() {
 
-	cout << "ScaleneT - destructor" << endl;
+	cout << "IsoscelesT - destructor" << endl;
 	Reset();
 
 }
@@ -57,9 +64,9 @@ ScaleneT::~ScaleneT() {
 /// @brief overload of operator = 
 /// @param t reference to the object on the right side of the operator 
 /// @return reference to the object on the left side of the operator 
-ScaleneT& ScaleneT::operator=(const ScaleneT &t) { 
+IsoscelesT& IsoscelesT::operator=(const IsoscelesT &t) { 
 
-	cout << "ScaleneT - operator =" << endl;
+	cout << "IsoscelesT - operator =" << endl;
 
 	Init(t);
 	
@@ -70,7 +77,7 @@ ScaleneT& ScaleneT::operator=(const ScaleneT &t) {
 /// @brief overload of operator == 
 /// @param t reference to the object on the right side of the operator 
 /// @return true if the two objects have the same sides  
-bool ScaleneT::operator==(const ScaleneT &t) { 
+bool IsoscelesT::operator==(const IsoscelesT &t) { 
 
 	if (t.side1 == side1 && t.side2 == side2 && t.side3 == side3)
 		return true;
@@ -84,14 +91,12 @@ bool ScaleneT::operator==(const ScaleneT &t) {
 		return true;
     if (t.side1 == side3 && t.side2 == side2 && t.side3 == side1)
 		return true;
-	
-    //we have to include all the cases because a triangle is equal to another if they have the same sides and it doesn't matter the order of these sides
 
 	return false;
 }
 
 /// @brief default initialization of the object
-void ScaleneT::Init() {
+void IsoscelesT::Init() {
 	SetDim(0, 0, 0);
 	
 }
@@ -99,13 +104,13 @@ void ScaleneT::Init() {
 
 /// @brief initialization of the object as a copy of an object 
 /// @param t reference to the object that should be copied 
-void ScaleneT::Init(const ScaleneT &t) {
+void IsoscelesT::Init(const IsoscelesT &t) {
 	Init();
 	SetDim(t.side1, t.side2, t.side3);
 }
 
 /// @brief total reset of the object  
-void ScaleneT::Reset() {
+void IsoscelesT::Reset() {
 	
 	SetDim(0, 0, 0);
 	
@@ -114,7 +119,7 @@ void ScaleneT::Reset() {
 
 /// @brief set first side of the object
 /// @param s1 first side 
-void ScaleneT::SetFirstSide(float s1) {
+void IsoscelesT::SetFirstSide(float s1) {
 
 	if (s1 < 0.) {
 		WarningMessage("SetFirstSide: the side should be > 0");
@@ -127,7 +132,7 @@ void ScaleneT::SetFirstSide(float s1) {
 
 /// @brief set second side of the object
 /// @param s2 second side 
-void ScaleneT::SetSecondSide(float s2) {
+void IsoscelesT::SetSecondSide(float s2) {
 
 	if (s2 < 0.) {
 		WarningMessage("SetSecondSide: the side should be > 0");
@@ -140,7 +145,7 @@ void ScaleneT::SetSecondSide(float s2) {
 
 /// @brief set third side of the object
 /// @param s3 third side 
-void ScaleneT::SetThirdSide(float s3) {
+void IsoscelesT::SetThirdSide(float s3) {
 
 	if (s3 < 0.) {
 		WarningMessage("SetThirdSide: the side should be > 0");
@@ -154,7 +159,7 @@ void ScaleneT::SetThirdSide(float s3) {
 
 /// @brief get first side of the object
 /// @return first side 
-float ScaleneT::GetFirstSide() {
+float IsoscelesT::GetFirstSide() {
 
 	return side1;
 
@@ -162,14 +167,14 @@ float ScaleneT::GetFirstSide() {
 
 /// @brief get second side of the object
 /// @return second side
-float ScaleneT::GetSecondSide() {
+float IsoscelesT::GetSecondSide() {
 
 	return side2;
 }
 
 /// @brief get third side of the object
 /// @return third side
-float ScaleneT::GetThirdSide() {
+float IsoscelesT::GetThirdSide() {
 
 	return side3;
 }
@@ -179,8 +184,7 @@ float ScaleneT::GetThirdSide() {
 /// @param s1 first side 
 /// @param s2 second side
 /// @param s3 third side
-void ScaleneT::SetDim(float s1, float s2, float s3) {
-
+void IsoscelesT::SetDim(float s1, float s2, float s3) {
 	side1 = s1;
 	side2 = s2;  
     side3 = s3;
@@ -193,7 +197,7 @@ void ScaleneT::SetDim(float s1, float s2, float s3) {
 /// @param s1 first side 
 /// @param s2 second side
 /// @param s3 third side
-void ScaleneT::GetDim(float &s1, float &s2, float &s3) {
+void IsoscelesT::GetDim(float &s1, float &s2, float &s3) {
 
 	s1 = side1;
 	s2 = side2; 
@@ -202,42 +206,43 @@ void ScaleneT::GetDim(float &s1, float &s2, float &s3) {
 	return;
 }
 
-/// @brief computes the area of the object
-/// @return the area 
-float ScaleneT::GetArea() {
-	//we have to use Eulero's formula
-	return (sqrt((GetPerimeter()/2) * ((GetPerimeter()/2)-side1) * ((GetPerimeter()/2)-side2) * ((GetPerimeter()/2)-side3)));
+/// @brief write an error message when the object isn't a valid isosceles triangle
+/// @param s1 first side
+/// @param s2 second side 
+/// @param s3 third side
+bool IsoscelesT::NotAValidIsosceles(float s1, float s2, float s3){
+    if (s1 == s2 || s1 == s3 || s2 == s3)
+        return true;
+
+    return false;
 }
 
 
 /// @brief write an error message 
 /// @param string message to be printed
-void ScaleneT::ErrorMessage(const char *string) {
+void IsoscelesT::ErrorMessage(const char *string) {
 	
-	cout << endl << "ERROR -- ScaleneT --";
+	cout << endl << "ERROR -- IsoscelesT --";
 	cout << string << endl;
 
 }
 
 /// @brief write a warning message 
 /// @param string message to be printed
-void ScaleneT::WarningMessage(const char *string) {
+void IsoscelesT::WarningMessage(const char *string) {
 	
-	cout << endl << "WARNING -- ScaleneT --";
+	cout << "WARNING -- IsoscelesT --";
 	cout << string << endl;
+	cout << endl;
 
 }
 
 
 /// @brief for debugging: all about the object
-void ScaleneT::Dump() {
+void IsoscelesT::Dump() {
 	cout << endl;
-	cout << "---ScaleneT---" << endl; 
+	cout << "---IsoscelesT---" << endl; 
 	cout << endl;
-	
-	cout << "First Side = " << side1 << endl;
-	cout << "Second Side = " << side2 << endl;
-    cout << "Third Side = " << side3 << endl;
 	
 	Triangle::Dump();
 	

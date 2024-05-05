@@ -1,5 +1,6 @@
-/*! \file triangle.h
+/*! \file Ctriangle.h
 	\brief Declaration of the general class Triangle
+	\author Elisa Angelinelli
 
 	Details.
 */
@@ -48,7 +49,7 @@ public:
 	/// @{
 	float GetPerimeter();
 	void GetSides(float &s0, float &s1, float &s2);
-	virtual float GetArea();
+	float GetArea(); //we can use Eulero's formula that is valid for all different types of triangle
 	/// @}
 	
 	/// @name DEBUG and SERIALIZATION 

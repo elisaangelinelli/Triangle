@@ -1,9 +1,10 @@
-/** \file triangle.cpp
+/** \file Ctriangle.cpp
 	\brief Implementation of the general class Triangle
 	\author Elisa Angelinelli
 */
 
-#include "triangle.h"
+#include <math.h>
+#include "Ctriangle.h"
 
 /// @brief default constructor 
 Triangle::Triangle() {
@@ -11,7 +12,7 @@ Triangle::Triangle() {
 	cout << "Triangle - constructor - default" << endl;
 
 	Reset();
-} 
+}
 
 /// @brief copy constructor 
 /// @param t reference to the object that should be copied 
@@ -99,6 +100,13 @@ void Triangle::GetSides(float &s0, float &s1, float &s2) {
 	s2 = sides[2];
 }
 
+/// @brief computes the area of the object
+/// @return the area 
+float Triangle::GetArea() {
+	//we have to use Eulero's formula
+	return (sqrt((GetPerimeter()/2) * ((GetPerimeter()/2)-sides[0]) * ((GetPerimeter()/2)-sides[1]) * ((GetPerimeter()/2)-sides[2])));
+}
+
 /// @brief write an error message 
 /// @param string message to be printed
 void Triangle::ErrorMessage(const char *string) {
@@ -120,7 +128,9 @@ void Triangle::WarningMessage(const char *string) {
 void Triangle::Dump() {
 	
 	cout << endl;
-	cout << "Sides = " << sides[0] << "; " << sides[1] << "; " << sides[2] << "; " << endl;
+	cout << "First Side = " << sides[0] << endl;
+	cout << "Second Side = " << sides[1] << endl;
+	cout << "Third Side = " << sides[2] << endl;
 	cout << "Perimeter = " << GetPerimeter() << endl;
 	cout << endl;
 }

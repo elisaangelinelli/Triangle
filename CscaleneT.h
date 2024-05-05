@@ -1,4 +1,4 @@
-/*! \file scaleneT.h
+/*! \file CscaleneT.h
 	\brief Declaration of the class ScaleneT
 
 	Details.
@@ -9,7 +9,7 @@
 #define SCALENET_H
 
 #include <iostream>
-#include "triangle.h"
+#include "Ctriangle.h"
 
 using namespace std;
 
@@ -59,8 +59,6 @@ public:
 	float GetFirstSide();
 	float GetSecondSide();
     float GetThirdSide(); 
-	
-	float GetArea();
 	/// @}
 	
 	
