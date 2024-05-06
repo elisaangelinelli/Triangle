@@ -132,5 +132,6 @@ void Triangle::Dump() {
 	cout << "Second Side = " << sides[1] << endl;
 	cout << "Third Side = " << sides[2] << endl;
 	cout << "Perimeter = " << GetPerimeter() << endl;
+	cout << "Area = " << GetArea() << endl;
 	cout << endl;
 }
